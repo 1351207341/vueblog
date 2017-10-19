@@ -1,40 +1,36 @@
 <template>
-  <div class="material-layout">
-      <main class="material-layout__content" id="main">
-          <div class="material-index mdl-grid">
-              <div v-for="(post, index) in postList" class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade">
-                  <div :style ="post.bgurl" class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50 lazy">
-                      <p class="article-headline-p">
-                        <router-link :to="{name:'article',params:{articleid:post['id']}}">
-                          <a>{{post['title']}}</a>
+  <div class="material-index mdl-grid">
+      <div v-for="(post, index) in postList" class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade">
+          <div :style ="post.bgurl" class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50 lazy">
+              <p class="article-headline-p">
+                <router-link :to="{name:'article',params:{articleid:post['id']}}">
+                  <a>{{post['title']}}</a>
+                </router-link>
+              </p>
+          </div>
+          <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+              <div class="post_entry-abstract">{{post['abstract']}}</div>
+              <div class="post_entry-info">
+                  <div class="post_entry-left-info">
+                      <strong>Viosey</strong> <span>{{post['time']}}</span>
+                  </div>
+                  <div class="post_entry-right-info">
+                      <span class="post_entry-category">
+                        <router-link :to="{name:'type',params:{typeid:post['typeid']}}">
+                          <a class="post_category-link">{{post['type']}}</a>
                         </router-link>
-                      </p>
-                  </div>
-                  <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-                      <div class="post_entry-abstract">{{post['abstract']}}</div>
-                      <div class="post_entry-info">
-                          <div class="post_entry-left-info">
-                              <strong>Viosey</strong> <span>{{post['time']}}</span>
-                          </div>
-                          <div class="post_entry-right-info">
-                              <span class="post_entry-category">
-                                <router-link :to="{name:'type',params:{typeid:post['typeid']}}">
-                                  <a class="post_category-link">{{post['type']}}</a>
-                                </router-link>
-                              </span>
-                              <span class="post_entry-views"></span>
-                          </div> 
-                      </div>
-                  </div>
+                      </span>
+                      <span class="post_entry-views"></span>
+                  </div> 
               </div>
           </div>
-      </main>
+      </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'material',
+  name: 'material-index',
   data () {
     return {
       postList: []
