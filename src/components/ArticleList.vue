@@ -68,6 +68,51 @@ export default {
           'type': '技术向',
           'typeid': 10,
           'time': '10月 12, 2017'
+        },
+        {
+          'id': 3,
+          'title': '手动编译 Nginx 并安装 VeryNginx',
+          'abstract': 'VeryNginx 是个非常有意思且便捷的 Nginx 扩展程序。最近新开了台 VPS，便想体验一下它带来的快感。',
+          'bgurl': {backgroundImage: 'url(http://localhost:8080/static/compile-nginx-and-install-verynginx.png)'},
+          'type': '技术向',
+          'typeid': 10,
+          'time': '10月 12, 2017'
+        },
+        {
+          'id': 3,
+          'title': '手动编译 Nginx 并安装 VeryNginx',
+          'abstract': 'VeryNginx 是个非常有意思且便捷的 Nginx 扩展程序。最近新开了台 VPS，便想体验一下它带来的快感。',
+          'bgurl': {backgroundImage: 'url(http://localhost:8080/static/compile-nginx-and-install-verynginx.png)'},
+          'type': '技术向',
+          'typeid': 10,
+          'time': '10月 12, 2017'
+        },
+        {
+          'id': 3,
+          'title': '手动编译 Nginx 并安装 VeryNginx',
+          'abstract': 'VeryNginx 是个非常有意思且便捷的 Nginx 扩展程序。最近新开了台 VPS，便想体验一下它带来的快感。',
+          'bgurl': {backgroundImage: 'url(http://localhost:8080/static/compile-nginx-and-install-verynginx.png)'},
+          'type': '技术向',
+          'typeid': 10,
+          'time': '10月 12, 2017'
+        },
+        {
+          'id': 3,
+          'title': '手动编译 Nginx 并安装 VeryNginx',
+          'abstract': 'VeryNginx 是个非常有意思且便捷的 Nginx 扩展程序。最近新开了台 VPS，便想体验一下它带来的快感。',
+          'bgurl': {backgroundImage: 'url(http://localhost:8080/static/compile-nginx-and-install-verynginx.png)'},
+          'type': '技术向',
+          'typeid': 10,
+          'time': '10月 12, 2017'
+        },
+        {
+          'id': 3,
+          'title': '手动编译 Nginx 并安装 VeryNginx',
+          'abstract': 'VeryNginx 是个非常有意思且便捷的 Nginx 扩展程序。最近新开了台 VPS，便想体验一下它带来的快感。',
+          'bgurl': {backgroundImage: 'url(http://localhost:8080/static/compile-nginx-and-install-verynginx.png)'},
+          'type': '技术向',
+          'typeid': 10,
+          'time': '10月 12, 2017'
         }
       ]
     }

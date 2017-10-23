@@ -62,10 +62,33 @@ export default {
   .mdl-grid {
     display: flex!important;
   }
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s
+  .fade-enter-active{
+    animation:in .5s;
   }
-  .fade-enter, .fade-leave-to {
-    opacity: 0
+  .fade-leave-active{
+    animation:out .5s;
+  }
+  @keyframes in {
+    0% {
+      transform: scale(2);
+      opactity:0;
+    }
+    50% {
+      transform: scale(1.5);
+      opactity:0.5;
+    }
+    100% {
+      transform: scale(1);
+      opactity:1;
+    }
+  }
+  @keyframes out {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(2);
+      opactity:0;
+    }
   }
 </style>
