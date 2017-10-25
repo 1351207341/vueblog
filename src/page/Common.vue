@@ -1,9 +1,7 @@
 <template>
   <div class="material-layout">
     <main class="material-layout__content" id="main">
-      <transition name="fade">
-        <router-view/>
-      </transition>
+      <router-view/>
     </main>
   </div>
 </template>
@@ -62,33 +60,16 @@ export default {
   .mdl-grid {
     display: flex!important;
   }
-  .fade-enter-active{
-    animation:in .5s;
+  /* 可以设置不同的进入和离开动画 */
+  /* 设置持续时间和动画函数 */
+  .slide-fade-enter-active {
+    transition: all .3s ease;
   }
-  .fade-leave-active{
-    animation:out .5s;
+  .slide-fade-leave-active {
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
-  @keyframes in {
-    0% {
-      transform: scale(2);
-      opactity:0;
-    }
-    50% {
-      transform: scale(1.5);
-      opactity:0.5;
-    }
-    100% {
-      transform: scale(1);
-      opactity:1;
-    }
-  }
-  @keyframes out {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(2);
-      opactity:0;
-    }
+  .slide-fade-enter, .slide-fade-leave-to {
+    transform: translate3d(30px, 10px, 0);
+    opacity: 0;
   }
 </style>

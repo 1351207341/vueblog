@@ -63,7 +63,7 @@
 				</div>    
 			</div>
         </div>
-    </div>
+	</div>
 </template>
 
 <script>
@@ -73,6 +73,13 @@ export default {
     return {
       article: {}
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      window.scrollTo(0, 0)
+      vm.fetchData()
+      vm.idKey = vm.$route.params.articleid
+    })
   },
   mounted: function () {
     this.getArticle()
@@ -295,4 +302,16 @@ export default {
 	    padding-top: 0;
 	}
 	/**/
+	.article-item {
+		display: inline-block;
+		margin-right: 10px;
+	}
+	.article-enter-active, .article-leave-active {
+		transition: all 1s;
+	}
+	.article-enter, .article-leave-to
+		/* .list-leave-active for below version 2.1.8 */ {
+		opacity: 0;
+		transform: translateY(30px);
+	}
 </style>

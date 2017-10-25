@@ -1,6 +1,14 @@
 <template>
   <div id="app" class="mdl-layout__container">
-    <router-view/>
+    <div class="material-layout">
+      <main class="material-layout__content" id="main">
+        <transition name="slide-fade" mode="out-in">
+          <keep-alive include="material-index">
+            <router-view/>
+          </keep-alive>
+        </transition>
+      </main>
+    </div>
   </div>
 </template>
 
@@ -11,35 +19,96 @@ export default {
 </script>
 
 <style>
-    *, :after, :before {
-        box-sizing: border-box;
+  *, :after, :before {
+    box-sizing: border-box;
+  }
+  html, body {
+    font-family: Roboto,"Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+    overflow-x: hidden!important;
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    width: 100%;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    background-size: cover;
+    background-attachment: fixed;
+    content: '';
+    background-color: #e9ebec;
+    min-height: 100%;
+  }
+  .mdl-layout__container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  .material-layout {
+    width: 100%;
+    height: 100%;
+  }
+  .material-layout__content {
+    position: relative;
+    padding-top: 165px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  @media screen and (max-width: 480px){
+    .material-layout .material-layout__content {
+      padding-top: 0;
     }
-    html, body {
-        font-family: Roboto,"Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-        overflow-x: hidden!important;
-        display: block;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20px;
-        width: 100%;
+  }
+  @media (min-width: 840px){
+    .mdl-grid {
+      padding: 8px;
     }
-    body {
-        margin: 0;
-        padding: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: -1;
-        background-size: cover;
-        background-attachment: fixed;
-        content: '';
-        background-color: #e9ebec;
-        min-height: 100%;
-    }
-    .mdl-layout__container {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-    }
+  }
+  .mdl-grid {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    margin: 0 auto;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+  }
+  .material-index, .material-post {
+    display: flex;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    max-width: 900px;
+    flex-shrink: 0;
+  }
+  .mdl-grid {
+    display: flex!important;
+  }
+  /* 可以设置不同的进入和离开动画 */
+  /* 设置持续时间和动画函数 */
+  .slide-fade-enter-active {
+    transition: all .3s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to {
+    transform: translate3d(30px, 10px, 0);
+    opacity: 0;
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: all .3s ;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+    opacity: 0;
+    transform:translate3d(30px,0px,0);
+  }
 </style>
