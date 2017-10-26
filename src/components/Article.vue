@@ -1,92 +1,115 @@
 <template>
-	<div class="material-post_container">
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-				<div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(https://ws3.sinaimg.cn/large/006tKfTcly1fiickclvvxj30m80go77f.jpg)">
-		            <p class="article-headline-p">
-		                VPS的初始化
-		            </p>
-				</div>
-				<div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade">
-					<p><em>写一下刚买完vps后初始配置的命令</em></p>
-					<h2 id="系统升级"><a href="#系统升级" class="headerlink" title="系统升级"></a>系统升级</h2>
-					<figure class="highlight plain">
-					    <table>
-					        <tbody>
-					            <tr>
-					                <td class="gutter"><pre><div class="line">1</div></pre></td>
-					                <td class="code"><pre><div class="line">sudo apt-get update &amp;&amp; apt-get upgrade -y</div></pre></td>
-					            </tr>
-					        </tbody>
-					    </table>
-					</figure>
-					<h2 id="上传密钥"><a href="#上传密钥" class="headerlink" title="上传密钥"></a>上传密钥</h2>
-					<figure class="highlight bash">
-					    <table>
-					        <tbody>
-					            <tr>
-					                <td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td>
-					                <td class="code"><pre><div class="line">ssh-copy-id root@ip</div><div class="line"></div><div class="line">nano /etc/ssh/sshd_config</div><div class="line"></div><div class="line">PasswordAuthentication yes -&gt; PasswordAuthentication no</div><div class="line"></div><div class="line">service sshd restart</div></pre></td>
-					            </tr>
-					        </tbody>
-					    </table>
-					</figure>
-					<h2 id="开启BBR"><a href="#开启BBR" class="headerlink" title="开启BBR"></a>开启BBR</h2>
-					<figure class="highlight bash">
-					    <table>
-					        <tbody>
-					            <tr>
-					                <td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td>
-					                <td class="code"><pre><div class="line">有些需要设置 grub2 内核后再开启BBR</div><div class="line"></div><div class="line">有些需要手动升级内核</div><div class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.12/linux-image-4.12.0-041200-generic_4.12.0-041200.201707022031_amd64.deb</div><div class="line">dpkg -i linux-image-4.12.0-041200-generic_4.12.0-041200.201707022031_amd64.deb</div><div class="line">/usr/sbin/update-grub</div><div class="line">reboot</div><div class="line"></div><div class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh</div><div class="line">chmod +x bbr.sh</div><div class="line">./bbr.sh</div><div class="line"></div><div class="line">lsmod | grep bbr</div></pre></td>
-					            </tr>
-					        </tbody>
-					    </table>
-					</figure>
-					<h2 id="部署Docker"><a href="#部署Docker" class="headerlink" title="部署Docker"></a>部署Docker</h2>
-					<figure class="highlight bash">
-					    <table>
-					        <tbody>
-					            <tr>
-					                <td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td>
-					                <td class="code"><pre><div class="line">curl -s https://get.docker.com/ | sudo sh</div><div class="line">docker -v</div></pre></td>
-					            </tr>
-					        </tbody>
-					    </table>
-					</figure>
-					<hr>
-					<p>参考
-					    <br><a href="http://blog.lxx1.com/1578" target="_blank" rel="external">linux下一键安装Docker | 科技爱好者博客</a>
-					    <br><a href="https://www.91yun.co/archives/5174" target="_blank" rel="external">Centos/Ubuntu/Debian BBR加速一键安装包 - 91云(91yun.co)</a>
-					    <br><a href="http://www.jianshu.com/p/460b4ce4f8e1" target="_blank" rel="external">在Mac上远程登录VPS - 简书</a>
-					    <br><a href="https://www.duoluodeyu.com/1114.html" target="_blank" rel="external">Linux配置使用SSH Key登录并禁用root密码登录 | 堕落的鱼</a>
-					</p>  
-				</div>    
+	<div class="material-post mdl-grid">
+		<div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+			<div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(https://ws3.sinaimg.cn/large/006tKfTcly1fiickclvvxj30m80go77f.jpg)">
+				<p class="article-headline-p">VPS的初始化</p>
 			</div>
-        </div>
+			<div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade">
+				<p><em>写一下刚买完vps后初始配置的命令{{article.a}}</em></p>
+				<h2 id="系统升级"><a href="#系统升级" class="headerlink" title="系统升级"></a>系统升级</h2>
+				<figure class="highlight plain">
+					<table>
+						<tbody>
+						  <tr>
+						      <td class="gutter"><pre><div class="line">1</div></pre></td>
+						      <td class="code"><pre><div class="line">sudo apt-get update &amp;&amp; apt-get upgrade -y</div></pre></td>
+						  </tr>
+						</tbody>
+					</table>
+				</figure>
+				<h2 id="上传密钥"><a href="#上传密钥" class="headerlink" title="上传密钥"></a>上传密钥</h2>
+				<figure class="highlight bash">
+				<table>
+				<tbody>
+				  <tr>
+				      <td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td>
+				      <td class="code"><pre><div class="line">ssh-copy-id root@ip</div><div class="line"></div><div class="line">nano /etc/ssh/sshd_config</div><div class="line"></div><div class="line">PasswordAuthentication yes -&gt; PasswordAuthentication no</div><div class="line"></div><div class="line">service sshd restart</div></pre></td>
+				  </tr>
+				</tbody>
+				</table>
+				</figure>
+				<h2 id="开启BBR"><a href="#开启BBR" class="headerlink" title="开启BBR"></a>开启BBR</h2>
+				<figure class="highlight bash">
+				<table>
+				<tbody>
+				  <tr>
+				      <td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td>
+				      <td class="code"><pre><div class="line">有些需要设置 grub2 内核后再开启BBR</div><div class="line"></div><div class="line">有些需要手动升级内核</div><div class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.12/linux-image-4.12.0-041200-generic_4.12.0-041200.201707022031_amd64.deb</div><div class="line">dpkg -i linux-image-4.12.0-041200-generic_4.12.0-041200.201707022031_amd64.deb</div><div class="line">/usr/sbin/update-grub</div><div class="line">reboot</div><div class="line"></div><div class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh</div><div class="line">chmod +x bbr.sh</div><div class="line">./bbr.sh</div><div class="line"></div><div class="line">lsmod | grep bbr</div></pre></td>
+				  </tr>
+				</tbody>
+				</table>
+				</figure>
+				<h2 id="部署Docker"><a href="#部署Docker" class="headerlink" title="部署Docker"></a>部署Docker</h2>
+				<figure class="highlight bash">
+				<table>
+				<tbody>
+				  <tr>
+				      <td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td>
+				      <td class="code"><pre><div class="line">curl -s https://get.docker.com/ | sudo sh</div><div class="line">docker -v</div></pre></td>
+				  </tr>
+				</tbody>
+				</table>
+				</figure>
+				<hr>
+				<p>参考
+				<br><a href="http://blog.lxx1.com/1578" target="_blank" rel="external">linux下一键安装Docker | 科技爱好者博客</a>
+				<br><a href="https://www.91yun.co/archives/5174" target="_blank" rel="external">Centos/Ubuntu/Debian BBR加速一键安装包 - 91云(91yun.co)</a>
+				<br><a href="http://www.jianshu.com/p/460b4ce4f8e1" target="_blank" rel="external">在Mac上远程登录VPS - 简书</a>
+				<br><a href="https://www.duoluodeyu.com/1114.html" target="_blank" rel="external">Linux配置使用SSH Key登录并禁用root密码登录 | 堕落的鱼</a>
+				</p>  
+			</div>    
+		</div>
 	</div>
 </template>
 
 <script>
+import Velocity from 'velocity-animate'
 export default {
   name: 'material-article',
   data () {
     return {
-      article: {}
+      id: 0,
+      article: {},
+      el: null
     }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
       window.scrollTo(0, 0)
-      vm.fetchData()
-      vm.idKey = vm.$route.params.articleid
+      vm.id = vm.$route.params.articleid
     })
   },
-  mounted: function () {
+  created: function () {
     this.getArticle()
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      console.log('加载完DOM')
+      console.log(this.$el)
+      this.el = this.$el
+      this.leave(this.el)
+    })
+  },
+  beforeUpdate: function () {
+    this.$nextTick(function () {
+      console.log('DOM更新前')
+    })
+    this.leave(this.el)
+  },
+  updated: function () {
+    this.$nextTick(function () {
+      console.log('更新完DOM')
+    })
   },
   methods: {
     getArticle: function () {
-      this.article = {}
+      this.article = {'a': 'safas'}
+    },
+    leave: function (el) {
+      Velocity(el, { opacity: 1, translateX: [0, '30px'] }, { duration: 1000 })
+    },
+    reave: function (el) {
+      Velocity(el, { opacity: 0, translateX: ['30px', 0] }, { duration: 1000 })
     }
   }
 }
@@ -194,7 +217,7 @@ export default {
 	    } 
 	}
 	@media screen and (max-width: 480px){
-	    .material-post_container .mdl-card {
+	    .mdl-card {
 	        margin: 0;
 	        width: 100%;
 	    }
@@ -229,11 +252,11 @@ export default {
 	    flex-direction: row;
 	    align-items: flex-end;
 	}
-	.material-post_container .material-post>.mdl-card .mdl-card__media {
+	.material-post>.mdl-card .mdl-card__media {
 	    height: 280px;
 	}
 
-	.material-post_container .article-headline-p {
+	.article-headline-p {
 	    font-size: 34px;
 	    line-height: 40px;
 	    font-weight: 400;
@@ -241,7 +264,7 @@ export default {
 	    text-shadow: 1px 1px 8px #444;
 	}
 	@media screen and (max-width: 840px){
-	    .material-post_container .article-headline-p {
+	    .article-headline-p {
 	        font-size: 22px;
 	    }
 	}
@@ -291,7 +314,7 @@ export default {
 	        min-height: 70px;
 	    }
 	}
-	.material-post_container .meta+.mdl-card__supporting-text {
+	.meta+.mdl-card__supporting-text {
 	    display: block;
 	    border: 0;
 	    flex-direction: column;
@@ -302,16 +325,4 @@ export default {
 	    padding-top: 0;
 	}
 	/**/
-	.article-item {
-		display: inline-block;
-		margin-right: 10px;
-	}
-	.article-enter-active, .article-leave-active {
-		transition: all 1s;
-	}
-	.article-enter, .article-leave-to
-		/* .list-leave-active for below version 2.1.8 */ {
-		opacity: 0;
-		transform: translateY(30px);
-	}
 </style>

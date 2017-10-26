@@ -29,12 +29,15 @@
 </template>
 
 <script>
+import Velocity from 'velocity-animate'
 export default {
   name: 'material-index',
   data () {
     return {
       postList: [],
-      scrollY: 0
+      scrollY: 0,
+      el: null,
+      isFirst: true
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -46,20 +49,50 @@ export default {
     this.scrollY = window.scrollY
     console.log(this.scrollY)
     next(vm => {})
+    // this.leave(this.el)
   },
   mounted: function () {
-    console.log(localStorage.getItem('indexScrollTop'))
-    // window.addEventListener('scroll', this.getScrollTop)
+    this.$nextTick(function () {
+      console.log('加载完DOM')
+      console.log(this.$el)
+      this.el = this.$el
+      // this.leave(this.el)
+    })
   },
   created: function () {
     this.getPostList()
     // console.log(this.$route)
   },
+  updated: function () {
+    this.$nextTick(function () {
+      console.log('更新完DOM')
+      this.leave(this.el)
+    })
+  },
   activated: function () {
-    // console.log(1)
-    // window.scrollTo(0, localStorage.getItem('indexScrollTop'))
+    // keep-alive 激活调用
+    console.log('keep-alive 激活调用')
+    if (this.isFirst !== true) {
+      this.leave(this.el)
+    }
+  },
+  deactivated: function () {
+    // keep-alive 移除时调用
+    console.log('keep-alive 移除时调用')
+    this.isFirst = false
+    this.$nextTick(function () {
+      this.reave(this.el)
+    })
+  },
+  beforeDestroy: function () {
+    // 组件销毁前调用
+    console.log('组件销毁前调用')
+    this.$nextTick(function () {
+      this.reave(this.el)
+    })
   },
   destroyed: function () {
+    // 组件销毁后调用
     this.getScrollTop()
   },
   methods: {
@@ -78,6 +111,7 @@ export default {
       localStorage.setItem('indexScrollTop', scrollTop)
     },
     getHeight: function () {
+      // this.leave(this.el)
       var _this = this
       this.$http.post('/api', {})
       .then(function (response) {
@@ -89,6 +123,12 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
+    },
+    leave: function (el) {
+      Velocity(el, { opacity: 1, translateX: [0, '30px'] }, { duration: 800 })
+    },
+    reave: function (el) {
+      Velocity(el, { opacity: 0, translateX: ['30px', 0] }, { duration: 1000 })
     }
   }
 }
@@ -125,17 +165,18 @@ export default {
     -ms-flex-align: stretch;
     align-items: stretch;
   }
-  .material-index, .material-post {
+  /* .material-index, .material-post {
     display: flex;
     margin: 0 auto;
     padding: 0;
     width: 100%;
     max-width: 900px;
     flex-shrink: 0;
-  }
-  .mdl-grid {
+    opacity: 0;
+  } */
+  /* .mdl-grid {
     display: flex!important;
-  }
+  } */
   /*列表*/
   .mdl-accordion, .mdl-button, .mdl-card, .mdl-checkbox, .mdl-dropdown-menu, .mdl-icon-toggle, .mdl-item, .mdl-radio, .mdl-slider, .mdl-switch, .mdl-tabs__tab, a {
     -webkit-tap-highlight-color: transparent;
