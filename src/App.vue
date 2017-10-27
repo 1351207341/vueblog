@@ -5,14 +5,52 @@
           <keep-alive include="material-index">
             <router-view/>
           </keep-alive>
+          <ToTop :scroll="scroll" v-on:currentScroll="scrollEvent"></ToTop>
       </main>
     </div>
   </div>
 </template>
 
 <script>
+import ToTop from '@/components/ToTop'
 export default {
-  name: 'app'
+  name: 'app',
+  data () {
+    return {
+      scroll: 0
+    }
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      window.addEventListener('scroll', this.onScroll)
+    })
+  },
+  methods: {
+    getScrollTop: function () {
+      let scrollTop = 0
+      if (document.documentElement && document.documentElement.scrollTop) {
+        scrollTop = document.documentElement.scrollTop
+      } else if (document.body) {
+        scrollTop = document.body.scrollTop
+      }
+      return scrollTop
+    },
+    onScroll: function () {
+      this.scroll = this.getScrollTop()
+      console.log(this.scroll)
+    },
+    scrollEvent: function (date) {
+      // 接收子组件滚动条滚动位置
+      this.scroll = date
+    }
+  },
+  watch: {
+    scroll: function (val) {
+      // 发送消息到子组件
+      console.log('发送消息到子组件')
+    }
+  },
+  components: { ToTop }
 }
 </script>
 

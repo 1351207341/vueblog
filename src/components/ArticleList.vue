@@ -43,6 +43,8 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => {
       window.scrollTo(0, vm.scrollY)
+      // 告诉父组件当前滚动条位置
+      vm.toScrollEvent(vm.scrollY)
     })
   },
   beforeRouteLeave (to, from, next) {
@@ -106,9 +108,9 @@ export default {
         console.log(error)
       })
     },
-    getScrollTop: function () {
-      var scrollTop = document.documentElement.scrollTop
-      localStorage.setItem('indexScrollTop', scrollTop)
+    toScrollEvent: function (scrollY) {
+      // 通知父组件当前滚动条位置
+      this.$emit('currentScroll', scrollY)
     },
     getHeight: function () {
       // this.leave(this.el)
