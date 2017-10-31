@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Velocity from 'velocity-animate'
 export default {
   name: 'material-index',
@@ -49,14 +50,14 @@ export default {
   },
   beforeRouteLeave (to, from, next) {
     this.scrollY = window.scrollY
-    console.log(this.scrollY)
+    // console.log(this.scrollY)
     next(vm => {})
     // this.leave(this.el)
   },
   mounted: function () {
     this.$nextTick(function () {
-      console.log('加载完DOM')
-      console.log(this.$el)
+      // console.log('加载完DOM')
+      // console.log(this.$el)
       this.el = this.$el
       // this.leave(this.el)
     })
@@ -67,20 +68,23 @@ export default {
   },
   updated: function () {
     this.$nextTick(function () {
-      console.log('更新完DOM')
+      // console.log('更新完DOM')
+      // 数据加载完毕设置显示footer
+      this.show_footer_to_true()
+      // 过渡动效
       this.leave(this.el)
     })
   },
   activated: function () {
     // keep-alive 激活调用
-    console.log('keep-alive 激活调用')
+    // console.log('keep-alive 激活调用')
     if (this.isFirst !== true) {
       this.leave(this.el)
     }
   },
   deactivated: function () {
     // keep-alive 移除时调用
-    console.log('keep-alive 移除时调用')
+    // console.log('keep-alive 移除时调用')
     this.isFirst = false
     this.$nextTick(function () {
       this.reave(this.el)
@@ -88,7 +92,7 @@ export default {
   },
   beforeDestroy: function () {
     // 组件销毁前调用
-    console.log('组件销毁前调用')
+    // console.log('组件销毁前调用')
     this.$nextTick(function () {
       this.reave(this.el)
     })
@@ -98,6 +102,9 @@ export default {
     this.getScrollTop()
   },
   methods: {
+    ...mapActions({
+      show_footer_to_true: 'show_footer_to_true'
+    }),
     getPostList: function () {
       var _this = this
       this.$http.post('/api', {})
@@ -117,7 +124,7 @@ export default {
       var _this = this
       this.$http.post('/api', {})
       .then(function (response) {
-        console.log(response.data)
+        // console.log(response.data)
         for (var i = response.data.length - 1; i >= 0; i--) {
           _this.postList.push(response.data[i])
         }
@@ -136,21 +143,6 @@ export default {
 }
 </script>
 <style>
-  .material-layout {
-    width: 100%;
-    height: 100%;
-  }
-  .material-layout__content {
-    position: relative;
-    padding-top: 165px;
-    margin: 0 auto;
-    width: 100%;
-  }
-  @media screen and (max-width: 480px){
-    .material-layout .material-layout__content {
-      padding-top: 0;
-    }
-  }
   @media (min-width: 840px){
     .mdl-grid {
       padding: 8px;
@@ -167,7 +159,7 @@ export default {
     -ms-flex-align: stretch;
     align-items: stretch;
   }
-  /* .material-index, .material-post {
+  .material-index {
     display: flex;
     margin: 0 auto;
     padding: 0;
@@ -175,10 +167,10 @@ export default {
     max-width: 900px;
     flex-shrink: 0;
     opacity: 0;
-  } */
-  /* .mdl-grid {
+  }
+  .mdl-grid {
     display: flex!important;
-  } */
+  }
   /*列表*/
   .mdl-accordion, .mdl-button, .mdl-card, .mdl-checkbox, .mdl-dropdown-menu, .mdl-icon-toggle, .mdl-item, .mdl-radio, .mdl-slider, .mdl-switch, .mdl-tabs__tab, a {
     -webkit-tap-highlight-color: transparent;
@@ -209,12 +201,12 @@ export default {
   .mdl-cell {
     box-sizing: border-box;
   }
-  @media (max-width: 479px){
-    .mdl-cell--12-col {
-      width: calc(100% - 1pc);
-    }
+  @media (min-width: 840px){
     .mdl-cell {
       margin: 8px;
+      width: calc(33.3333333333% - 1pc);
+    }
+    .mdl-cell--12-col {
       width: calc(100% - 1pc);
     }
   }
@@ -227,14 +219,18 @@ export default {
       width: calc(100% - 1pc);
     }
   }
-  @media (min-width: 840px){
-    .mdl-cell {
-      margin: 8px;
-      width: calc(33.3333333333% - 1pc);
-    }
+  @media (max-width: 479px){
     .mdl-cell--12-col {
       width: calc(100% - 1pc);
     }
+    .mdl-cell {
+      margin: 8px;
+      width: calc(100% - 1pc);
+    }
+  }
+  .post_entry-module {
+    margin-bottom: 47.59px;
+    margin-top: 0;
   }
   .fade {
     transition: all .2s linear;
@@ -244,10 +240,6 @@ export default {
     -o-transform: translate3d(0,0,0);
     transform: translate3d(0,0,0);
     opacity: 1;
-  }
-  .post_entry-module {
-    margin-bottom: 47.59px;
-    margin-top: 0;
   }
   .material-layout .mdl-card {
     display: flex;

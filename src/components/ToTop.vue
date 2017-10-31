@@ -35,19 +35,50 @@
       showTopBtn: function () {
         if (this.scroll > 300) {
           this.isVisible = true
+          // 网页总高度
+          let totalHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
+          // 可视高度
+          let clientHeight = document.documentElement.clientHeight
+          // 卷曲的高度
+          let scrollTop = document.documentElement.scrollTop
+          // 网页宽度
+          let clientWidth = document.documentElement.clientWidth
+          let ceild = 0
+          if (clientWidth <= 840) {
+            ceild = 160
+          } else {
+            ceild = 76
+          }
+          let scle = totalHeight - scrollTop - clientHeight
+          if (scle <= ceild) {
+            this.isDocked = true
+          } else {
+            this.isDocked = false
+          }
         } else {
           this.isVisible = false
         }
       },
       toTop: function () {
-        document.body.scrollTop = 0
-        document.documentElement.scrollTop = 0
-        this.nowScroll = 0
+        let startTime = (new Date()).getTime()
+        let timer = setInterval(function () {
+          let changeTime = (new Date()).getTime()
+          let t = 1000 - Math.max(0, startTime - changeTime + 1000)
+          // 获取滚动条的滚动高度
+          let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+          // 用于设置速度差，产生缓动的效果
+          let value = (0 - scrollTop) * (t /= 1000) * t + scrollTop
+          document.documentElement.scrollTop = document.body.scrollTop = value
+          // console.log(scrollTop)
+          if (scrollTop === 0) {
+            clearInterval(timer)
+          }
+        }, 13)
       }
     },
     watch: {
       scroll: function (val) {
-        console.log('接收到消息')
+        // console.log('接收到消息')
         this.showTopBtn()
         this.nowScroll = this.scroll
       }
@@ -72,6 +103,12 @@
   .btt_docked {
     position: absolute;
     bottom: 75pt;
+  }
+  @media screen and (max-width: 840px){
+    .btt_docked {
+      position: absolute;
+      bottom: 100px;
+    }
   }
   .toTop {
     background: #757575 !important;

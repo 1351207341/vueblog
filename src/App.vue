@@ -5,14 +5,16 @@
           <keep-alive include="material-index">
             <router-view/>
           </keep-alive>
-          <ToTop :scroll="scroll" v-on:currentScroll="scrollEvent"></ToTop>
+          <to-top :scroll="scroll" v-on:currentScroll="scrollEvent"></to-top>
       </main>
     </div>
+    <keep-alive include="footer"><v-footer></v-footer></keep-alive>
   </div>
 </template>
 
 <script>
 import ToTop from '@/components/ToTop'
+import Footer from '@/components/Footer'
 export default {
   name: 'app',
   data () {
@@ -37,7 +39,7 @@ export default {
     },
     onScroll: function () {
       this.scroll = this.getScrollTop()
-      console.log(this.scroll)
+      // console.log(this.scroll)
     },
     scrollEvent: function (date) {
       // 接收子组件滚动条滚动位置
@@ -47,10 +49,13 @@ export default {
   watch: {
     scroll: function (val) {
       // 发送消息到子组件
-      console.log('发送消息到子组件')
+      // console.log('发送消息到子组件')
     }
   },
-  components: { ToTop }
+  components: {
+    'to-top': ToTop,
+    'v-footer': Footer
+  }
 }
 </script>
 
@@ -88,23 +93,29 @@ export default {
   }
   .material-layout {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
   }
   .material-layout__content {
     position: relative;
     padding-top: 165px;
+    padding-bottom: 200px;
     margin: 0 auto;
     width: 100%;
   }
   @media screen and (max-width: 480px){
     .material-layout .material-layout__content {
       padding-top: 0;
+      padding-bottom: 280px;
     }
   }
-  @media (min-width: 840px){
-    .mdl-grid {
-      padding: 8px;
-    }
+  .material-index, .material-post {
+    display: flex;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    max-width: 900px;
+    flex-shrink: 0;
+    opacity: 0;
   }
   .mdl-grid {
     display: -webkit-box;
@@ -117,16 +128,12 @@ export default {
     -ms-flex-align: stretch;
     align-items: stretch;
   }
-  .material-index, .material-post {
-    display: flex;
-    margin: 0 auto;
-    padding: 0;
-    width: 100%;
-    max-width: 900px;
-    flex-shrink: 0;
-    opacity: 0;
-  }
   .mdl-grid {
     display: flex!important;
+  }
+  @media (min-width: 840px){
+    .mdl-grid {
+      padding: 8px;
+    }
   }
 </style>
