@@ -25,12 +25,12 @@
               </div>
           </div>
       </div>
-      <Paging :pageData="pageData" v-on:pageTurning="pageEvent"></Paging>
+      <Paging2 :pageData="pageData" v-on:pageTurning="pageEvent"></Paging2>
     </div>
 </template>
 
 <script>
-import Paging from '@/components/Paging'
+import Paging2 from '@/components/Paging'
 import { mapActions } from 'vuex'
 import Velocity from 'velocity-animate'
 export default {
@@ -46,7 +46,7 @@ export default {
     }
   },
   components: {
-    Paging
+    Paging2
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
@@ -70,7 +70,6 @@ export default {
     })
   },
   created: function () {
-    console.log(this.$route)
     if (this.$route.query.page) {
       this.page = this.$route.query.page
     }
@@ -105,14 +104,14 @@ export default {
   },
   beforeDestroy: function () {
     // 组件销毁前调用
-    console.log('组件销毁前调用')
+    // console.log('组件销毁前调用')
     this.$nextTick(function () {
       this.reave(this.el)
     })
   },
   destroyed: function () {
     // 组件销毁后调用
-    this.getScrollTop()
+    // this.getScrollTop()
   },
   methods: {
     ...mapActions({
@@ -178,7 +177,7 @@ export default {
         let _this = this
         this.page = Number(val.query.page)
         this.reave(this.el, () => {
-          console.log(2)
+          console.log(1)
           _this.getPostList()
         })
       } else {

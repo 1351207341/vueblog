@@ -28,7 +28,7 @@ export default new Router({
     {
       path: '/type/:typeid',
       name: 'type',
-      component: resolve => require(['@/components/ArticleList.vue'], resolve),
+      component: resolve => require(['@/components/ArticleType.vue'], resolve),
       meta: {keepAlive: false}
     }
   ]

@@ -8,7 +8,7 @@
         </button>
       </a>
     <span class="page-number current">{{ pageData['current'] }}</span>
-      <a class="extend next">
+      <a class="extend next" v-on:click="nextPage">
         <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
           <svg t="1509624933105" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5867" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20">
             <path d="M619.6224 116.5312a28.9792 28.9792 0 1 0-41.5744 40.2432l317.2352 326.7584H49.3568a28.9792 28.9792 0 0 0 0 57.856h845.0048L578.1504 867.2256a28.9792 28.9792 0 0 0 41.5744 40.2432L1003.52 512z" p-id="5868" fill="#2c2c2c"></path>
@@ -29,21 +29,30 @@ export default {
       postList: []
     }
   },
+  beforeDestroy: function () {
+    // 组件销毁前调用
+    console.log('组件销毁前调用')
+  },
+  destroyed: function () {
+    // 组件销毁后调用
+    console.log('组件销毁后调用')
+  },
   methods: {
-    getPostList: function () {
-      var _this = this
-      this.$http.post('/api', {page: this.currentPage, typeid: this.typeid})
-      .then(function (response) {
-        _this.postList = response.data
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-    },
     prevPage: function () {
-      this.$route.query.page = 2  // 其中val是当前的页数。
-      console.log(this.$route.query)
-      // this.$router.replace(route)
+      let page = Number(this.pageData.current) - 1
+      if (page === 0 || page < 0) {
+        page = 1
+      }
+      this.$router.push({query: {'page': page}})
+      this.$emit('pageTurning', page)
+    },
+    nextPage: function () {
+      let page = Number(this.pageData.current) + 1
+      if (page === Number(this.pageData.maxPage) || page > Number(this.pageData.maxPage)) {
+        page = Number(this.pageData.maxPage)
+      }
+      this.$router.push({query: {'page': page}})
+      this.$emit('pageTurning', page)
     }
   }
 }
