@@ -25,12 +25,12 @@
               </div>
           </div>
       </div>
-      <Paging2 :pageData="pageData" v-on:pageTurning="pageEvent"></Paging2>
+      <Paging :pageData="pageData" v-on:pageTurning="pageEvent"></Paging>
     </div>
 </template>
 
 <script>
-import Paging2 from '@/components/Paging'
+import Paging from '@/components/Paging'
 import { mapActions } from 'vuex'
 import Velocity from 'velocity-animate'
 export default {
@@ -42,14 +42,17 @@ export default {
       el: null,
       isFirst: true,
       page: 1,
-      pageData: {}
+      pageData: {},
+      name: 'type',
+      upComName: 'index'
     }
   },
   components: {
-    Paging2
+    Paging
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
+      // console.log(to)
       window.scrollTo(0, vm.scrollY)
       // 告诉父组件当前滚动条位置
       vm.toScrollEvent(vm.scrollY)
@@ -72,6 +75,8 @@ export default {
   created: function () {
     if (this.$route.query.page) {
       this.page = this.$route.query.page
+    } else {
+      this.page = 1
     }
     this.getPostList()
     // console.log(this.$route.query.page)
@@ -91,7 +96,10 @@ export default {
     // keep-alive 激活调用
     console.log('keep-alive 激活调用')
     if (this.isFirst !== true) {
-      // this.leave(this.el)
+      // 从上一路由article跳转过来时过渡显示
+      if (this.upComName === 'article') {
+        this.leave(this.el)
+      }
     }
   },
   deactivated: function () {
@@ -173,17 +181,26 @@ export default {
   watch: {
     // 如果路由有变化，会再次执行该方法
     '$route': function (val, oldval) {
-      if (val.name === oldval.name) {
-        let _this = this
+      if (Number(val.query.page)) {
         this.page = Number(val.query.page)
-        this.reave(this.el, () => {
-          console.log(1)
-          _this.getPostList()
-        })
       } else {
-        this.leave(this.el)
+        this.page = 1
       }
-      this.page = Number(val.query.page)
+      this.upComName = oldval.name
+      if (val.name === 'type') {
+        if (val.name === oldval.name) {
+          this.$emit('goToTop')
+          console.log('滚动滚动条')
+        }
+        // 上一路由为article时不去请求数据
+        if (oldval.name !== 'article') {
+          let _this = this
+          this.reave(this.el, () => {
+            // console.log(val)
+            _this.getPostList()
+          })
+        }
+      }
     }
   }
 }

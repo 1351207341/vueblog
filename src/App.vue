@@ -3,9 +3,9 @@
     <div class="material-layout">
       <main class="material-layout__content" id="main">
           <keep-alive include="material-index">
-            <router-view/>
+            <router-view v-on:goToTop="toTopFun"></router-view>
           </keep-alive>
-          <to-top :scroll="scroll" v-on:currentScroll="scrollEvent"></to-top>
+          <to-top ref="toTopMethod" :scroll="scroll" v-on:currentScroll="scrollEvent"></to-top>
       </main>
     </div>
     <keep-alive include="footer"><v-footer></v-footer></keep-alive>
@@ -37,12 +37,16 @@ export default {
       }
       return scrollTop
     },
+    toTopFun: function () {
+      this.$refs.toTopMethod.toTop()
+    },
     onScroll: function () {
       this.scroll = this.getScrollTop()
       // console.log(this.scroll)
     },
     scrollEvent: function (date) {
       // 接收子组件滚动条滚动位置
+      console.log('接收到子组件滚动条滚动位置')
       this.scroll = date
     }
   },
